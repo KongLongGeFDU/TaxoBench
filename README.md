@@ -150,7 +150,7 @@ Complete evaluation tools from the paper are provided in the `metric/` directory
 
 | Metric | Description | Script |
 | :--- | :--- | :--- |
-| **Recall** | (Deep Research Mode only) [cite_start]Coverage of expert-selected papers [cite: 172-174] | `get_recall.py` |
+| **Recall** | (Deep Research Mode only) [cite_start]Coverage of expert-selected papers [cite: 172-174] | `get_clustering_result.py` |
 | **ARI** | [cite_start]Adjusted Rand Index — agreement between clustering & ground truth [cite: 179-181] | `get_clustering_metric.py` |
 | **V-Measure** | [cite_start]Weighted average of Homogeneity and Completeness [cite: 184-194] | `get_clustering_metric.py` |
 

@@ -156,7 +156,7 @@ chmod +x script/eval_setting3.sh
 
 | 指标 | 说明 | 对应脚本 |
 | :--- | :--- | :--- |
-| **Recall** | (仅 Deep Research Mode) 衡量检索到的论文对专家选定核心文献的覆盖率。 | `get_recall.py` |
+| **Recall** | (仅 Deep Research Mode) 衡量检索到的论文对专家选定核心文献的覆盖率。 | `get_clustering_result.py` |
 | **ARI** | **Adjusted Rand Index**。衡量模型聚类结果与专家 Ground Truth 的一致性。 | `get_clustering_metric.py` |
 | **V-Measure** | 包含 **Homogeneity** (纯度) 和 **Completeness** (完整性) 的加权平均。 | `get_clustering_metric.py` |
 
