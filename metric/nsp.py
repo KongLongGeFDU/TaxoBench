@@ -37,7 +37,7 @@ def collect_node_names(root: TreeNode) -> List[str]:
 
 
 # ----------------------------
-# Soft Cardinality and NSR
+# Soft Cardinality and NSP
 # ----------------------------
 def soft_cardinality(names: List[str], model: SentenceTransformer) -> float:
     """
@@ -58,11 +58,11 @@ def soft_cardinality(names: List[str], model: SentenceTransformer) -> float:
     return c
 
 
-def nsr(gt_names: List[str], mt_names: List[str], model: SentenceTransformer) -> float:
+def NSP(gt_names: List[str], mt_names: List[str], model: SentenceTransformer) -> float:
     c_gt = soft_cardinality(gt_names, model)
     c_mt = soft_cardinality(mt_names, model)
     c_union = soft_cardinality(gt_names + mt_names, model)
-    # Traditional NSR: denominator uses c_gt
+    # Traditional NSP: denominator uses c_gt
     if c_gt == 0:
         return 0.0
     return (c_gt + c_mt - c_union) / c_mt
@@ -96,7 +96,7 @@ def load_pairs(path: str) -> List[Tuple[List[str], List[str], int]]:
 # Main Process
 # ----------------------------
 def main():
-    parser = argparse.ArgumentParser(description="Compute Node Soft Recall (NSR)")
+    parser = argparse.ArgumentParser(description="Compute Node Soft Recall (NSP)")
     parser.add_argument(
         "--input",
         default="model/output/model_name/merged.jsonl",
@@ -117,13 +117,13 @@ def main():
     if not pairs:
         return
 
-    nsr_list: List[float] = []
+    NSP_list: List[float] = []
     for gt_names, mt_names, survey_id in pairs:
-        val = nsr(gt_names, mt_names, model)
-        nsr_list.append(val)
+        val = NSP(gt_names, mt_names, model)
+        NSP_list.append(val)
 
-    avg = sum(nsr_list) / len(nsr_list)
-    print(f"Total {len(nsr_list)} records, average NSR: {avg:.4f}")
+    avg = sum(NSP_list) / len(NSP_list)
+    print(f"Total {len(NSP_list)} records, average NSP: {avg:.4f}")
 
 
 if __name__ == "__main__":

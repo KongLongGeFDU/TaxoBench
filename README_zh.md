@@ -72,9 +72,13 @@ TaxoBench/
 │   ├── eval_setting2.py
 │   └── eval_setting3.py
 ├── metric/                   # 评估指标
+│   ├── get_clustering_result.py  # Get clustering alignment results
 │   ├── get_clustering_metric.py  # Leaf-Level Metrics
+│   ├── get_taxonomy_result.py    # Get hierarchical structure
 │   ├── get_taxonomy_metric.py    # Hierarchy-Level (LLM Judge)
 │   ├── ted.py                    # Tree Edit Distance
+│   ├── nsp.py                    # soft nsp
+│   ├── nsr.py                    # soft nsr
 │   └── soft_f1.py                # Soft F1 (NSR / NSP)
 └── results/                  # 实验结果输出
 ```
