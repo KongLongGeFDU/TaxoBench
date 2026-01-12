@@ -87,7 +87,7 @@ TaxoBench/
 
 本仓库聚焦论文中的 **Bottom-Up Mode**，通过三种递进的信息粒度（Input Granularities）考察模型的组织能力。
 
-### 🔹 Setting 1：基础元数据
+### 🔹 Setting 1：基础评估
 * **输入**：Title + Abstract
 * **启动命令**：
     ```bash
@@ -95,7 +95,7 @@ TaxoBench/
     ```
 * **说明**：最基础设定，仅依赖表层语义信息，评估模型的初步组织能力。
 
-### 🔹 Setting 2：增强语义上下文
+### 🔹 Setting 2：基础评估 + 摘要
 * **输入**：Title + Abstract + Summary
 * **启动命令**：
     ```bash
@@ -103,7 +103,7 @@ TaxoBench/
     ```
 * **说明**：Summary 由 LLM 生成，包含研究问题、动机、方法等，评估更丰富语义是否提升分类质量。
 
-### 🔹 Setting 3：核心要素
+### 🔹 Setting 3：基础评估 + 论文核心内容
 * **输入**：Title + Abstract + Core-task & Contributions
 * **启动命令**：
     ```bash
