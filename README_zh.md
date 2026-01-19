@@ -1,6 +1,6 @@
 # TaxoBench: 一个面向科研文献的层级分类生成与评估基准
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![Paper](https://img.shields.io/badge/Paper-Arxiv-red.svg)](https://arxiv.org/abs/2601.xxxxx)
 
@@ -182,4 +182,5 @@ chmod +x script/eval_setting3.sh
 loading......
 ```
 ## 📄 License
-This project is licensed under the MIT License. See the LICENSE file for details.
+
+本项目采用 Apache License 2.0 开源协议，详见 [LICENSE](LICENSE) 文件。

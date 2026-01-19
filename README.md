@@ -1,6 +1,6 @@
 # TaxoBench: A Hierarchical Taxonomy Generation and Evaluation Benchmark for Scientific Literature
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![Paper](https://img.shields.io/badge/Paper-Arxiv-red.svg)](https://arxiv.org/abs/2601.xxxxx)
 
@@ -173,5 +173,6 @@ If you use this code or dataset in your research, please cite our paper:
 loading~
 ```
 ## 📄 License
-This project is licensed under the MIT License. See the LICENSE file for details.
+
+This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
 
