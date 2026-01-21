@@ -12,8 +12,8 @@
 
 本项目基于复旦大学 NLP 实验室论文：
 
-> *Can Deep Research Agents Find and Organize?  
-> Evaluating the Synthesis Gap with Expert Taxonomies*
+> *[Can Deep Research Agents Find and Organize?  
+> Evaluating the Synthesis Gap with Expert Taxonomies](https://arxiv.org/abs/2601.12369)*
 
 ### 📚 数据来源
 
@@ -179,7 +179,15 @@ chmod +x script/eval_setting3.sh
 如果您在研究中使用了本代码或数据集，请引用我们的论文：
 
 ```bibtex
-loading......
+@misc{zhang2026deepresearchagentsorganize,
+      title={Can Deep Research Agents Find and Organize? Evaluating the Synthesis Gap with Expert Taxonomies}, 
+      author={Ming Zhang and Jiabao Zhuang and Wenqing Jing and Ziyu Kong and Jingyi Deng and Yujiong Shen and Kexin Tan and Yuhang Zhao and Ning Luo and Renzhe Zheng and Jiahui Lin and Mingqi Wu and Long Ma and Yi Zou and Shihan Dou and Tao Gui and Qi Zhang and Xuanjing Huang},
+      year={2026},
+      eprint={2601.12369},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2601.12369}, 
+}
 ```
 ## 📄 License
 
