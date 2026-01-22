@@ -21,7 +21,7 @@
 - 专家人工构建的 **Taxonomy Trees**
 - **3,815 篇被精确归类的引用文献**，作为 Ground Truth
 
-你可以从 Hugging Face 获取我们的数据集：[https://huggingface.co/datasets/wuqingzhuan16/TaxoBench](https://huggingface.co/datasets/wuqingzhuan16/TaxoBench)
+你可以从 Hugging Face 获取我们的[数据集](https://huggingface.co/datasets/wuqingzhuan16/TaxoBench)。
 
 ### 🎯 评估模式
 
