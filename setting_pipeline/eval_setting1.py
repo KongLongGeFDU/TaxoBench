@@ -384,6 +384,7 @@ def escape_quotes_inside_json_values(s: str) -> str:
 
     return ''.join(out)
 
+
 def build_papers_prompt(data):
     prompt_parts = []
     

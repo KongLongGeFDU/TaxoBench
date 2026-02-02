@@ -1,4 +1,4 @@
-# TaxoBench: 一个面向科研文献的层级分类生成与评估基准
+# TaxoBench: 深度研究智能体能否实现检索与组织？——利用专家分类评估综合能力差距
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
@@ -77,11 +77,8 @@ TaxoBench/
 │   ├── get_clustering_result.py  # Get clustering alignment results
 │   ├── get_clustering_metric.py  # Leaf-Level Metrics
 │   ├── get_taxonomy_result.py    # Get hierarchical structure
-│   ├── get_taxonomy_metric.py    # Hierarchy-Level (LLM Judge)
-│   ├── ted.py                    # Tree Edit Distance
-│   ├── nsp.py                    # soft nsp
-│   ├── nsr.py                    # soft nsr
-│   └── soft_f1.py                # Soft F1 (NSR / NSP)
+│   ├── get_taxonomy_result.py    # Sem-Path
+│   └── ted.py                    # US-TED / US-NTED
 └── results/                  # 实验结果输出
 ```
 
@@ -170,10 +167,9 @@ chmod +x script/eval_setting3.sh
 
 | 指标 | 说明 | 对应脚本 |
 | :--- | :--- | :--- |
-| **TED** | **Tree Edit Distance**。计算模型树转换为专家树所需的最小编辑成本。 | `ted.py` |
-| **Soft F1** | 基于 **NSR (Node Soft Recall)** 和 **NSP (Node Soft Precision)** 计算的软性 F1 分数。 | `soft_f1.py` |
-| **LLM-as-a-Judge** | 调用 GPT-4o 从以下 4 个维度打分。 **Semantic Coverage** (语义覆盖). **Sibling Organization** (兄弟节点 MECE 原则). **Hierarchical Logic** (层级逻辑). **Structural Topology** (结构拓扑) | `get_taxonomy_metric.py` |
-
+| **US-TED** | **Unordered Semantic Tree Edit Distance**。在忽略兄弟节点顺序的前提下，用语义标签相似度与最小成本二分匹配衡量专家树与模型树之间的层级结构差异；值越低表示结构越接近。 | `ted.py` |
+| **US-NTED** | **Normalized US-TED**。将 US-TED 按两树规模之和归一化，便于跨实例比较；报告中以百分比呈现，值越低表示结构越接近。 | `ted.py` |
+| **Sem-Path** | **Semantic Path Similarity**。针对已对齐的论文，计算其从“根节点到叶节点”的**语义路径相似度**。通过保持顺序的最小成本对齐来评估论文归类逻辑的一致性；值越高表示语义路径越匹配。 | `sem_path.py` |
 ---
 
 ## 📝 引用 (Citation)

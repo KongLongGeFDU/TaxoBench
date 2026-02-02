@@ -1,4 +1,4 @@
-# TaxoBench: A Hierarchical Taxonomy Generation and Evaluation Benchmark for Scientific Literature
+# TaxoBench: Can Deep Research Agents Retrieve and Organize? Evaluating the Synthesis Gap with Expert Taxonomies
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
@@ -76,11 +76,8 @@ TaxoBench/
 │   ├── get_clustering_result.py  # Get clustering alignment results
 │   ├── get_clustering_metric.py  # Leaf-Level Metrics
 │   ├── get_taxonomy_result.py    # Get hierarchical structure
-│   ├── get_taxonomy_metric.py    # Hierarchy-Level (LLM Judge)
-│   ├── ted.py                    # Tree Edit Distance
-│   ├── nsp.py                    # soft nsp
-│   ├── nsr.py                    # soft nsr
-│   └── soft_f1.py                # Soft F1 (NSR / NSP)
+│   ├── get_taxonomy_result.py    # Sem-Path
+│   └── ted.py                    # US-TED / US-NTED
 └── results/                  # Experiment results output
 ```
 ## 🧪 Evaluation Settings
@@ -160,13 +157,13 @@ Complete evaluation tools from the paper are provided in the `metric/` directory
 | **ARI** | [cite_start]Adjusted Rand Index — agreement between clustering & ground truth [cite: 179-181] | `get_clustering_metric.py` |
 | **V-Measure** | [cite_start]Weighted average of Homogeneity and Completeness [cite: 184-194] | `get_clustering_metric.py` |
 
-### 🌳 Hierarchy-Level Metrics (Taxonomy Tree Structure)
+### 🌳 Hierarchy-Level Metrics (Taxonomy Structure)
 
 | Metric | Description | Script |
 | :--- | :--- | :--- |
-| **TED** | [cite_start]Tree Edit Distance — minimum cost to transform model tree to expert tree [cite: 200-205] | `ted.py` |
-| **Soft F1** | [cite_start]Soft F1 based on NSR (Node Soft Recall) and NSP (Node Soft Precision) [cite: 208-215] | `soft_f1.py` |
-| **LLM-as-a-Judge** | [cite_start]GPT-4o scoring on 4 dimensions: Semantic Coverage, Sibling Organization, Hierarchical Logic, Structural Topology [cite: 217-221] | `get_taxonomy_metric.py` |
+| **US-TED** | **Unordered Semantic Tree Edit Distance**. Measures the global hierarchy divergence between the expert and model trees using semantic label similarity and min-cost bipartite matching, ignoring sibling order. Lower values indicate higher structural similarity. | `ted.py` |
+| **US-NTED** | **Normalized US-TED**. Normalizes US-TED by the total number of nodes in both trees to facilitate cross-instance comparison; reported as a percentage where lower values represent closer structural alignment. | `ted.py` |
+| **Sem-Path** | **Semantic Path Similarity**. Evaluates the consistency of the **ancestor-chain** for aligned papers. It computes an order-preserving min-cost alignment between root-to-leaf paths, accounting for semantic label distance and depth penalties. Higher values indicate more semantically consistent categorization. | `sem_path.py` |
 
 ## 📝 Citation
 If you use this code or dataset in your research, please cite our paper:
