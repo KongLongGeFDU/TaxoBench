@@ -2,7 +2,7 @@
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
-[![Paper](https://img.shields.io/badge/Paper-Arxiv-red.svg)](https://arxiv.org/abs/2601.12369)
+[![Paper](https://img.shields.io/badge/Paper-Arxiv-red.svg)](https://www.arxiv.org/abs/2601.12369)
 
 ---
 
@@ -76,13 +76,9 @@ TaxoBench/
 ├── metric/                   # 评估指标
 │   ├── get_clustering_result.py  # 获取聚类对齐结果
 │   ├── get_clustering_metric.py  # Leaf-Level Metrics
-│   ├── get_taxonomy_result.py    # 获取层级结构
-│   ├── get_taxonomy_metric.py    # Taxonomy-Level Metrics
-│   ├── sem_path.py               # Sem-Path
-│   ├── ted.py                    # US-TED / US-NTED
-│   ├── nsp.py                    # NSP (Node Semantic Precision)
-│   ├── nsr.py                    # NSR (Node Semantic Recall)
-│   └── soft_f1.py                # Soft F1
+│   ├── get_taxonomy_result.py    # Get hierarchical structure
+│   ├── sem_path.py    # Sem-Path
+│   └── ted.py                    # US-TED / US-NTED
 └── results/                  # 实验结果输出
 ```
 
@@ -181,9 +177,9 @@ chmod +x script/eval_setting3.sh
 如果您在研究中使用了本代码或数据集，请引用我们的论文：
 
 ```bibtex
-@misc{zhang2026deepresearchagentsorganize,
-      title={Can Deep Research Agents Find and Organize? Evaluating the Synthesis Gap with Expert Taxonomies}, 
-      author={Ming Zhang and Jiabao Zhuang and Wenqing Jing and Ziyu Kong and Jingyi Deng and Yujiong Shen and Kexin Tan and Yuhang Zhao and Ning Luo and Renzhe Zheng and Jiahui Lin and Mingqi Wu and Long Ma and Yi Zou and Shihan Dou and Tao Gui and Qi Zhang and Xuanjing Huang},
+@misc{zhang2026deepresearchagentsretrieve,
+      title={Can Deep Research Agents Retrieve and Organize? Evaluating the Synthesis Gap with Expert Taxonomies}, 
+      author={Ming Zhang and Jiabao Zhuang and Wenqing Jing and Kexin Tan and Ziyu Kong and Jingyi Deng and Yujiong Shen and Yuhang Zhao and Ning Luo and Renzhe Zheng and Jiahui Lin and Mingqi Wu and Long Ma and Shihan Dou and Tao Gui and Qi Zhang and Xuanjing Huang},
       year={2026},
       eprint={2601.12369},
       archivePrefix={arXiv},
