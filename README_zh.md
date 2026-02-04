@@ -2,7 +2,7 @@
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
-[![Paper](https://img.shields.io/badge/Paper-Arxiv-red.svg)](https://arxiv.org/abs/2601.xxxxx)
+[![Paper](https://img.shields.io/badge/Paper-Arxiv-red.svg)](https://arxiv.org/abs/2601.12369)
 
 ---
 
@@ -74,11 +74,15 @@ TaxoBench/
 │   ├── eval_setting2.py
 │   └── eval_setting3.py
 ├── metric/                   # 评估指标
-│   ├── get_clustering_result.py  # Get clustering alignment results
+│   ├── get_clustering_result.py  # 获取聚类对齐结果
 │   ├── get_clustering_metric.py  # Leaf-Level Metrics
-│   ├── get_taxonomy_result.py    # Get hierarchical structure
-│   ├── get_taxonomy_result.py    # Sem-Path
-│   └── ted.py                    # US-TED / US-NTED
+│   ├── get_taxonomy_result.py    # 获取层级结构
+│   ├── get_taxonomy_metric.py    # Taxonomy-Level Metrics
+│   ├── sem_path.py               # Sem-Path
+│   ├── ted.py                    # US-TED / US-NTED
+│   ├── nsp.py                    # NSP (Node Semantic Precision)
+│   ├── nsr.py                    # NSR (Node Semantic Recall)
+│   └── soft_f1.py                # Soft F1
 └── results/                  # 实验结果输出
 ```
 
@@ -120,9 +124,8 @@ TaxoBench/
 
 ### 1️⃣ 克隆仓库 & 安装依赖
 ```bash
-git clone [https://github.com/KongLongGeFDU/TaxoBench.git](https://github.com/KongLongGeFDU/TaxoBench.git)
+git clone https://github.com/KongLongGeFDU/TaxoBench.git
 cd TaxoBench
-
 pip install openai anthropic tqdm numpy pandas scikit-learn
 ```
 ### 2️⃣ 配置 API Key
@@ -132,7 +135,7 @@ pip install openai anthropic tqdm numpy pandas scikit-learn
 from openai import OpenAI
 
 client = OpenAI(
-    base_url="[https://api.openai.com/v1](https://api.openai.com/v1)",
+    base_url="https://api.openai.com/v1",
     api_key="sk-..."
 )
 ```
@@ -169,7 +172,8 @@ chmod +x script/eval_setting3.sh
 | :--- | :--- | :--- |
 | **US-TED** | **Unordered Semantic Tree Edit Distance**。在忽略兄弟节点顺序的前提下，用语义标签相似度与最小成本二分匹配衡量专家树与模型树之间的层级结构差异；值越低表示结构越接近。 | `ted.py` |
 | **US-NTED** | **Normalized US-TED**。将 US-TED 按两树规模之和归一化，便于跨实例比较；报告中以百分比呈现，值越低表示结构越接近。 | `ted.py` |
-| **Sem-Path** | **Semantic Path Similarity**。针对已对齐的论文，计算其从“根节点到叶节点”的**语义路径相似度**。通过保持顺序的最小成本对齐来评估论文归类逻辑的一致性；值越高表示语义路径越匹配。 | `sem_path.py` |
+| **Sem-Path** | **Semantic Path Similarity**。针对已对齐的论文，计算其从"根节点到叶节点"的**语义路径相似度**。通过保持顺序的最小成本对齐来评估论文归类逻辑的一致性；值越高表示语义路径越匹配。 | `sem_path.py` |
+
 ---
 
 ## 📝 引用 (Citation)
@@ -187,6 +191,9 @@ chmod +x script/eval_setting3.sh
       url={https://arxiv.org/abs/2601.12369}, 
 }
 ```
+
+---
+
 ## 📄 License
 
 本项目采用 Apache License 2.0 开源协议，详见 [LICENSE](LICENSE) 文件。

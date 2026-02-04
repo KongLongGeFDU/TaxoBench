@@ -2,7 +2,7 @@
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
-[![Paper](https://img.shields.io/badge/Paper-Arxiv-red.svg)](https://arxiv.org/abs/2601.xxxxx)
+[![Paper](https://img.shields.io/badge/Paper-Arxiv-red.svg)](https://arxiv.org/abs/2601.12369)
 
 ---
 
@@ -12,7 +12,7 @@
 
 This project is based on the paper from Fudan University NLP Lab:
 
-> *[Can Deep Research Agents Find and Organize?  
+> *[Can Deep Research Agents Retrieve and Organize?  
 > Evaluating the Synthesis Gap with Expert Taxonomies](https://arxiv.org/abs/2601.12369)*
 
 ### 📚 Data Sources
@@ -76,10 +76,15 @@ TaxoBench/
 │   ├── get_clustering_result.py  # Get clustering alignment results
 │   ├── get_clustering_metric.py  # Leaf-Level Metrics
 │   ├── get_taxonomy_result.py    # Get hierarchical structure
-│   ├── get_taxonomy_result.py    # Sem-Path
-│   └── ted.py                    # US-TED / US-NTED
+│   ├── get_taxonomy_metric.py    # Taxonomy-Level Metrics
+│   ├── sem_path.py               # Sem-Path
+│   ├── ted.py                    # US-TED / US-NTED
+│   ├── nsp.py                    # NSP (Node Semantic Precision)
+│   ├── nsr.py                    # NSR (Node Semantic Recall)
+│   └── soft_f1.py                # Soft F1
 └── results/                  # Experiment results output
 ```
+
 ## 🧪 Evaluation Settings
 
 This repository focuses on the **Bottom-Up Mode** described in the paper, examining model organization capability across three progressively richer input granularities.
@@ -113,17 +118,19 @@ This repository focuses on the **Bottom-Up Mode** described in the paper, examin
   Uses expert-extracted core tasks and contributions
   Removes redundant descriptions, focuses on innovative essence
   Supports Thinking mode & self-correction
-→ Closest to how human experts cognitively organize knowledge
+  → Closest to how human experts cognitively organize knowledge
 ```
+
 ## 🚀 Quick Start
 
 ### Clone & Install Dependencies
 
 ```bash
-git clone [https://github.com/KongLongGeFDU/TaxoBench.git](https://github.com/KongLongGeFDU/TaxoBench.git)
+git clone https://github.com/KongLongGeFDU/TaxoBench.git
 cd TaxoBench
 pip install openai anthropic tqdm numpy pandas scikit-learn
 ```
+
 ### Configure API Keys
 Edit the Python scripts under `setting_pipeline/`:
 
@@ -131,10 +138,11 @@ Edit the Python scripts under `setting_pipeline/`:
 from openai import OpenAI
 
 client = OpenAI(
-    base_url="[https://api.openai.com/v1](https://api.openai.com/v1)",
+    base_url="https://api.openai.com/v1",
     api_key="sk-..."
 )
 ```
+
 ### Run Experiments
 Modify these fields in `script/eval_setting*.sh`:
 * `MODEL_PAIRS`: list of models
@@ -146,6 +154,7 @@ Then execute:
 chmod +x script/eval_setting3.sh
 ./script/eval_setting3.sh
 ```
+
 ## 📊 Evaluation Metrics
 Complete evaluation tools from the paper are provided in the `metric/` directory.
 
@@ -153,9 +162,9 @@ Complete evaluation tools from the paper are provided in the `metric/` directory
 
 | Metric | Description | Script |
 | :--- | :--- | :--- |
-| **Recall** | (Deep Research Mode only) [cite_start]Coverage of expert-selected papers [cite: 172-174] | `get_clustering_result.py` |
-| **ARI** | [cite_start]Adjusted Rand Index — agreement between clustering & ground truth [cite: 179-181] | `get_clustering_metric.py` |
-| **V-Measure** | [cite_start]Weighted average of Homogeneity and Completeness [cite: 184-194] | `get_clustering_metric.py` |
+| **Recall** | (Deep Research Mode only) Coverage of expert-selected papers | `get_clustering_result.py` |
+| **ARI** | Adjusted Rand Index — agreement between clustering & ground truth | `get_clustering_metric.py` |
+| **V-Measure** | Weighted average of Homogeneity and Completeness | `get_clustering_metric.py` |
 
 ### 🌳 Hierarchy-Level Metrics (Taxonomy Structure)
 
@@ -164,6 +173,8 @@ Complete evaluation tools from the paper are provided in the `metric/` directory
 | **US-TED** | **Unordered Semantic Tree Edit Distance**. Measures the global hierarchy divergence between the expert and model trees using semantic label similarity and min-cost bipartite matching, ignoring sibling order. Lower values indicate higher structural similarity. | `ted.py` |
 | **US-NTED** | **Normalized US-TED**. Normalizes US-TED by the total number of nodes in both trees to facilitate cross-instance comparison; reported as a percentage where lower values represent closer structural alignment. | `ted.py` |
 | **Sem-Path** | **Semantic Path Similarity**. Evaluates the consistency of the **ancestor-chain** for aligned papers. It computes an order-preserving min-cost alignment between root-to-leaf paths, accounting for semantic label distance and depth penalties. Higher values indicate more semantically consistent categorization. | `sem_path.py` |
+
+---
 
 ## 📝 Citation
 If you use this code or dataset in your research, please cite our paper:
@@ -179,6 +190,9 @@ If you use this code or dataset in your research, please cite our paper:
       url={https://arxiv.org/abs/2601.12369}, 
 }
 ```
+
+---
+
 ## 📄 License
 
 This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
