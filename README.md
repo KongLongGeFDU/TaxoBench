@@ -23,12 +23,12 @@ This project is based on the paper from Fudan University NLP Lab:
 - **Expert-constructed Taxonomy Trees**
 - **3,815 precisely classified cited papers** as Ground Truth
 
-You can download our [dataset](https://huggingface.co/datasets/wuqingzhuan16/TaxoBench) from Hugging Face.
+You can download our [dataset](https://huggingface.co/datasets/konglongge/TaxoBench) from Hugging Face.
 
 ```python
 from datasets import load_dataset
 
-dataset = load_dataset("wuqingzhuan16/TaxoBench")
+dataset = load_dataset("konglongge/TaxoBench")
 ```
 
 ### 🎯 Evaluation Modes
