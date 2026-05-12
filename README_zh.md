@@ -2,7 +2,9 @@
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
-[![Paper](https://img.shields.io/badge/Paper-Arxiv-red.svg)](https://www.arxiv.org/abs/2601.12369)
+[![Paper](https://img.shields.io/badge/Paper-Arxiv-red.svg)](https://arxiv.org/abs/2601.12369)
+
+[English](README.md) | 中文
 
 ---
 
@@ -22,6 +24,12 @@
 - **3,815 篇被精确归类的引用文献**，作为 Ground Truth
 
 你可以从 Hugging Face 获取我们的[数据集](https://huggingface.co/datasets/wuqingzhuan16/TaxoBench)。
+
+```python
+from datasets import load_dataset
+
+dataset = load_dataset("wuqingzhuan16/TaxoBench")
+```
 
 ### 🎯 评估模式
 
