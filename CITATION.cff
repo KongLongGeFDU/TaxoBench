@@ -1,0 +1,14 @@
+cff-version: 1.2.0
+title: TaxoBench
+message: If you use TaxoBench, please cite the accompanying paper.
+type: dataset
+authors:
+  - family-names: Zhang
+    given-names: Ming
+  - family-names: Zhuang
+    given-names: Jiabao
+  - family-names: Jing
+    given-names: Wenqing
+year: 2026
+url: https://github.com/KongLongGeFDU/TaxoBench
+repository-code: https://github.com/KongLongGeFDU/TaxoBench

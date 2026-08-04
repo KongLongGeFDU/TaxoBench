@@ -1,0 +1,1 @@
+{"id": "toy-0", "hierarchy_tree": {"name": "Toy LLM Systems", "subtopics": [{"name": "Retrieval Methods", "papers": ["Retrieval Augmented Generation"]}, {"name": "Agentic Systems", "papers": ["Agent Tool Use"]}, {"name": "Benchmarks", "papers": ["Long Context Evaluation"]}]}}

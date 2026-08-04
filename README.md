@@ -1,206 +1,63 @@
-# TaxoBench: Can Deep Research Agents Retrieve and Organize? Evaluating the Synthesis Gap with Expert Taxonomies
+# TaxoBench
 
-[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
-[![Paper](https://img.shields.io/badge/Paper-Arxiv-red.svg)](https://arxiv.org/abs/2601.12369)
+TaxoBench is a benchmark for evaluating whether deep-research systems and language models can retrieve expert-cited papers and organize them into expert-like survey taxonomies. This public repository contains only the dataset, schema, and offline scoring utilities. Raw model logs, API responses, reasoning traces, and internal provenance archives are intentionally not released.
 
-English | [中文](README_zh.md)
+Paper: [Can Deep Research Agents Retrieve and Organize? Evaluating the Synthesis Gap with Expert Taxonomies](https://arxiv.org/abs/2601.12369)
 
----
-
-## 📖 Project Overview
-
-**TaxoBench** is the first benchmark framework that systematically evaluates **Deep Research Agents** and **Large Language Models (LLMs)** on their ability to **organize, summarize, and construct hierarchical knowledge structures** from scientific literature, from the perspective of **human expert cognitive structures**.
-
-This project is based on the paper from Fudan University NLP Lab:
-
-> *[Can Deep Research Agents Retrieve and Organize?  
-> Evaluating the Synthesis Gap with Expert Taxonomies](https://arxiv.org/abs/2601.12369)*
-
-### 📚 Data Sources
-
-- **72 highly-cited computer science survey papers** (Survey Topics)
-- **Expert-constructed Taxonomy Trees**
-- **3,815 precisely classified cited papers** as Ground Truth
-
-You can download our [dataset](https://huggingface.co/datasets/konglongge/TaxoBench) from Hugging Face.
-
-```python
-from datasets import load_dataset
-
-dataset = load_dataset("konglongge/TaxoBench")
-```
-
-### 🎯 Evaluation Modes
-
-TaxoBench implements the two core evaluation paradigms defined in the paper:
-
-1. **Deep Research Mode**  
-   End-to-end evaluation: Retrieval → Filtering → Organization → Structured Summarization
-
-2. **Bottom-Up Mode** (focus of this repository)  
-   Given a fixed collection of papers, evaluate the model's ability to **build hierarchical knowledge structures (taxonomies) bottom-up**
-
----
-
-## 🌟 Key Features
-
-- **🧪 Two-level Evaluation Architecture**
-  - **Leaf-Level**: Retrieval & clustering quality
-  - **Hierarchy-Level**: Reasonableness of the classification tree structure
-
-- **⚡ High-throughput concurrent inference**
-  - Based on Python `multiprocessing`
-  - Supports large-scale parallelism
-
-- **🧠 Native support for Thinking / Reasoning modes**
-  - Well adapted to reasoning-enhanced models:
-    - DeepSeek-R1 / V3
-    - Claude 4.5 Sonnet
-    - Kimi-k2-Thinking, etc.
-
-- **🔌 Unified interface for multiple models**
-  - OpenAI (GPT-5)
-  - Anthropic (Claude 4.5)
-  - Google (Gemini 3)
-  - DeepSeek / Qwen / Moonshot (Kimi)
-
----
-
-## 📂 Repository Structure
+## Contents
 
 ```text
-TaxoBench/
-├── dataset/                  # Input data (72 Survey Topics + 3815 papers)
-├── script/                   # Experiment launch scripts (Bottom-Up Mode)
-│   ├── eval_setting1.sh      # Setting 1: Title + Abstract
-│   ├── eval_setting2.sh      # Setting 2: Title + Abstract + Summary
-│   └── eval_setting3.sh      # Setting 3: Title + Abstract + Core-task & Contributions
-├── setting_pipeline/         # Core inference logic (Python)
-│   ├── eval_setting1.py
-│   ├── eval_setting2.py
-│   └── eval_setting3.py
-├── metric/                   # Evaluation metrics
-│   ├── get_clustering_result.py  # Get clustering alignment results
-│   ├── get_clustering_metric.py  # Leaf-Level Metrics
-│   ├── get_taxonomy_result.py    # Get hierarchical structure
-│   ├── sem_path.py    # Sem-Path
-│   └── ted.py                    # US-TED / US-NTED
-└── results/                  # Experiment results output
+dataset/data.jsonl                 # 72 survey instances and expert taxonomies
+dataset/prompts_title_abstract.jsonl
+dataset/SCHEMA.md                  # data and prediction format
+taxobench/                         # offline scoring package
+examples/                          # tiny synthetic smoke-test files
+DATASET_LICENSE.md                 # data-use terms
 ```
 
-## 🧪 Evaluation Settings
-
-This repository focuses on the **Bottom-Up Mode** described in the paper, examining model organization capability across three progressively richer input granularities.
-
-### 🔹 Setting 1: Basic Metadata
-
-- **Input**: Title + Abstract
-- **Launch command**:
-
-  ```bash
-  bash script/eval_setting1.sh
-  ```
-
-- **Description**: The most basic setting. It uses only surface semantic information and tests preliminary organization ability.
-
-### 🔹 Setting 2: Basic Metadata + Summary
-
-- **Input**: Title + Abstract + Summary
-- **Launch command**:
-
-  ```bash
-  bash script/eval_setting2.sh
-  ```
-
-- **Description**: The summary is generated by an LLM and contains the research problem, motivation, and method. This setting tests whether richer semantics improves classification quality.
-
-### Setting 3: Basic Metadata + Core Elements
-
-- **Input**: Title + Abstract + Core-task & Contributions
-- **Launch command**:
-
-  ```bash
-  bash script/eval_setting3.sh
-  ```
-
-- **Description**: Uses expert-extracted core tasks and contributions, removes redundant descriptions, and focuses on the core novelty of each paper. This setting is closest to how human experts organize a field.
-
-## 🚀 Quick Start
-
-### Clone & Install Dependencies
+## Install
 
 ```bash
-git clone https://github.com/KongLongGeFDU/TaxoBench.git
-cd TaxoBench
-pip install openai anthropic tqdm numpy pandas scikit-learn
+pip install -e .
 ```
 
-### Configure API Keys
-Edit the Python scripts under `setting_pipeline/`:
+## Score a Prediction File
 
-```python
-from openai import OpenAI
-
-client = OpenAI(
-    base_url="https://api.openai.com/v1",
-    api_key="sk-..."
-)
-```
-
-### Run Experiments
-Modify these fields in `script/eval_setting*.sh`:
-* `MODEL_PAIRS`: list of models
-* `NUM_WORKERS`: number of parallel processes
-
-Then execute:
+A prediction file is JSONL with `id` and `hierarchy_tree` fields. See `dataset/SCHEMA.md`.
 
 ```bash
-chmod +x script/eval_setting3.sh
-./script/eval_setting3.sh
+taxobench-score --data dataset/data.jsonl --predictions your_predictions.jsonl --output scores.jsonl
 ```
 
-## 📊 Evaluation Metrics
-Complete evaluation tools from the paper are provided in the `metric/` directory.
+Run the built-in smoke test:
 
-### 🧩 Leaf-Level Metrics (Paper / Clustering Level)
+```bash
+taxobench-score --data examples/toy_reference.jsonl --predictions examples/toy_prediction.jsonl
+```
 
-| Metric | Description | Script |
-| :--- | :--- | :--- |
-| **Recall** | (Deep Research Mode only) Coverage of expert-selected papers | `get_clustering_result.py` |
-| **ARI** | Adjusted Rand Index — agreement between clustering & ground truth | `get_clustering_metric.py` |
-| **V-Measure** | Weighted average of Homogeneity and Completeness | `get_clustering_metric.py` |
+## Release Boundary
 
-### 🌳 Hierarchy-Level Metrics (Taxonomy Structure)
+This repository is for dataset access and offline evaluation. It does not include:
 
-| Metric | Description | Script |
-| :--- | :--- | :--- |
-| **US-TED** | **Unordered Semantic Tree Edit Distance**. Measures the global hierarchy divergence between the expert and model trees using semantic label similarity and min-cost bipartite matching, ignoring sibling order. Lower values indicate higher structural similarity. | `ted.py` |
-| **US-NTED** | **Normalized US-TED**. Normalizes US-TED by the total number of nodes in both trees to facilitate cross-instance comparison; reported as a percentage where lower values represent closer structural alignment. | `ted.py` |
-| **Sem-Path** | **Semantic Path Similarity**. Evaluates the consistency of the **ancestor-chain** for aligned papers. It computes an order-preserving min-cost alignment between root-to-leaf paths, accounting for semantic label distance and depth penalties. Higher values indicate more semantically consistent categorization. | `sem_path.py` |
+- model-generated taxonomies or deep-research product logs;
+- raw API responses or reasoning traces;
+- private credentials, endpoints, or local provenance archives;
+- aggregate model result tables from the submission.
 
----
-
-## 📝 Citation
-If you use this code or dataset in your research, please cite our paper:
+## Citation
 
 ```bibtex
 @misc{zhang2026deepresearchagentsretrieve,
-      title={Can Deep Research Agents Retrieve and Organize? Evaluating the Synthesis Gap with Expert Taxonomies}, 
-      author={Ming Zhang and Jiabao Zhuang and Wenqing Jing and Kexin Tan and Ziyu Kong and Jingyi Deng and Yujiong Shen and Yuhang Zhao and Ning Luo and Renzhe Zheng and Jiahui Lin and Mingqi Wu and Long Ma and Shihan Dou and Tao Gui and Qi Zhang and Xuanjing Huang},
-      year={2026},
-      eprint={2601.12369},
-      archivePrefix={arXiv},
-      primaryClass={cs.CL},
-      url={https://arxiv.org/abs/2601.12369}, 
+  title={Can Deep Research Agents Retrieve and Organize? Evaluating the Synthesis Gap with Expert Taxonomies},
+  author={Ming Zhang and Jiabao Zhuang and Wenqing Jing and Kexin Tan and Ziyu Kong and Jingyi Deng and Yujiong Shen and Zhenghao Xiang and Qiyuan Peng and Yuhang Zhao and Ning Luo and Renzhe Zheng and Jiahui Lin and Mingqi Wu and Long Ma and Shihan Dou and Max Pan and Tao Gui and Qi Zhang and Xuanjing Huang},
+  year={2026},
+  eprint={2601.12369},
+  archivePrefix={arXiv},
+  primaryClass={cs.CL},
+  url={https://arxiv.org/abs/2601.12369}
 }
 ```
 
----
+## License
 
-## 📄 License
-
-This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
-
-
-
+Code: Apache-2.0. Original TaxoBench annotations: CC BY-NC 4.0 for non-commercial research use. Third-party paper metadata and abstracts retain their original rights.

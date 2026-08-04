@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "taxobench"
+version = "0.2.0"
+description = "Dataset and offline scoring utilities for TaxoBench"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "Apache-2.0"}
+authors = [{name = "TaxoBench authors"}]
+dependencies = ["numpy", "scikit-learn"]
+
+[project.scripts]
+taxobench-score = "taxobench.score:main"
