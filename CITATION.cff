@@ -12,3 +12,4 @@ authors:
 year: 2026
 url: https://github.com/KongLongGeFDU/TaxoBench
 repository-code: https://github.com/KongLongGeFDU/TaxoBench
+repository-artifact: https://huggingface.co/datasets/konglongge/TaxoBench
